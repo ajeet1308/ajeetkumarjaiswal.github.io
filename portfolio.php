@@ -1,45 +1,6 @@
 <?php
 session_start();
-
-    
-if(isset($_POST['submit']) || isset($_POST['name']) || isset($_POST['email'])){
-	$name=htmlentities($_POST['name']);
-	$email=htmlentities($_POST['email']);
-	$feedback=htmlentities($_POST['feedback']);
-
-	if (strlen($name) < 1) {
-		$_SESSION['error']="Please enter your name";
-		header('Location: portfolio.php#section3');
-		return;
-	}
-
-	elseif (strlen($email) < 1) {
-		$_SESSION['error']="Please enter your email";
-		header('Location: portfolio.php#section3');
-		return;
-	}
-
-	elseif (strlen($feedback) < 1) {
-		$_SESSION['error']="Please enter your message";
-		header('Location: portfolio.php#section3');
-		return;
-	}
-
-	elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-		$_SESSION['error'] = "Invalid email format";
-		header('Location: portfolio.php#section3');
-		return;
-	}
-
-	else{
-		$_SESSION['success']="Thanks $name for being awesome!";
-		header('Location: portfolio.php#section3');
-		return;
-	}
-}
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -106,26 +67,15 @@ if(isset($_POST['submit']) || isset($_POST['name']) || isset($_POST['email'])){
 		<article class="contact-info" id="section3">
 
 		    <h2>Drop us a line</h2>
-			<form method="POST">
+			<form method="POST" action="https://formspree.io/f/xoqyporl">
 				<label for="name" id="fullname">Full Name</label><br>
-				<input type="text" name="name" placeholder="What's your full name?" id="name"><br><br>
+				<input type="text" name="name" placeholder="What's your full name?" id="name" required><br><br>
 				<label for="name" id="emailaddress">Email address</label><br>
-				<input type="email" name="email" placeholder="you@example.com" id="email"><br><br>
+				<input type="email" name="email" placeholder="you@example.com" id="email" required><br><br>
 				<label for="name" id="message">Message</label><br>
-				<input type="text" name="feedback" placeholder="Write your message here" id="feedback"><br><br>
+				<input type="text" name="feedback" placeholder="Write your message here" id="feedback" required><br><br>
 				<input type="submit" name="submit" value="Submit" id="submit"><br><br>
 			</form>
-			<?php
-			if (isset($_SESSION['error'])) {
-				echo('<p id="phperror">'.htmlentities($_SESSION['error'])."</p>\n");
-				unset($_SESSION['error']);
-			}
-			if (isset($_SESSION['success'])) {
-				echo('<p id="phpsuccess">'.htmlentities($_SESSION['success'])."</p>\n");
-				unset($_SESSION['success']);
-			}
-
-			?>
 			<br><br>
 			<p class="feed">Hey Viewers:) I would be pleased to hear your feedbacks.</p><br>
 			<p class="feed">To send me yours query you can ping me at given email <a href="mailto:ajeetj1308@gmail.com" style="color:#d6e778; text-decoration: none;"><i class="fa fa-envelope" aria-hidden="true"></i> ajeetj1308@gmail.com</a> address.</p>
